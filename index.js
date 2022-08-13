@@ -1,5 +1,20 @@
 let isModalOpen = false;
 let contrastToggle = false;
+const scaleFactor = 1/20;
+
+
+function moveBackground(event){
+    const shapes = document.querySelectorAll(".shape");
+    const x = event.clientX * scaleFactor;
+    const y = event.clientY * scaleFactor;
+    
+    
+    for (let i = 0; i < shapes.length; ++i){
+        const isOdd = i % 2 !== 0;
+        const boolInt = isOdd ? -1 : 1;
+        shapes[i].style.transform = `translate(${x * boolInt}px, ${y * boolInt}px)`
+    }
+}
 
 
 function toggleContrast(){
@@ -12,11 +27,6 @@ function toggleContrast(){
         document.body.classList.remove("dark-theme")
     }
 }
-
-
-
-
-
 
 
 
@@ -42,18 +52,21 @@ function contact(event){
     }).catch(() => {
         loading.classList.remove("modal__overlay--visible");
         alert(
-            "The email service is temporarily available. Please contact me directly on kwb.augusto@gmail.com"
+            "The email service is temporarily unavailable. Please contact me directly on kwb.augusto@gmail.com"
         );
     })
 
 }
 
 function toggleModal(){
-    document.body.classList += " modal--open"; 
-    isModalOpen = !isModalOpen;   
+
+    isModalOpen = !isModalOpen;
     if (isModalOpen){
-        return document.body.classList.remove("modal--open")
-    } 
-    
+        document.body.classList += " modal--open";
+    }
+    else {
+        document.body.classList.remove("modal--open");
+    }
+
 }
 
